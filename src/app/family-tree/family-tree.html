@@ -94,11 +94,11 @@
               </div>
 
               <button type="button" class="add-new-btn" (click)="openAddChildDialog(node, $event)">
-                <h2 style="font-size: 1.5rem"><span>+</span></h2>
+                <h2 style="font-size: 1.5rem; color: #222"><span>+</span></h2>
               </button>
 
               @if (node.children?.length) {
-                <small>
+                <small style="color: #222">
                   {{ node.expanded ? '▼' : '▶' }}
                 </small>
               }
