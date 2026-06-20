@@ -1,0 +1,441 @@
+@import 'tailwindcss';
+.chart-container {
+  overflow: auto;
+  cursor: grab;
+  user-select: none;
+}
+
+.backToPrev {
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.chart-container:active {
+  cursor: grabbing;
+}
+.family {
+  position: relative;
+  z-index: 99;
+  /* --- App Header Layout --- */
+  .app-header {
+    background: linear-gradient(135deg, #4a4747 0%, #ebf5ffe3 100%);
+    padding: 17px 32px;
+    // border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(148, 163, 184, 0.08);
+    margin-bottom: 24px;
+    // border: 1px solid #e2e8f0;
+
+    /* Dropdown Container Custom Select Wrapper */
+    select {
+      // Appearance Reset
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      // Layout & Alignment
+      display: inline-block;
+      width: 100%;
+      max-width: 260px;
+      min-width: 180px;
+      padding: 0.6rem 2.5rem 0.6rem 1rem; // Extra right padding for custom arrow
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2c3e50;
+      line-height: 1.5;
+
+      // Custom Arrow Icon using SVG Data-URI
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: left 0.8rem center; // Positions arrow correctly for RTL layout
+      background-size: 1rem;
+      background-color: #ffffff;
+
+      // Borders & Radii
+      border: 1px solid #dcdde1;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+
+      // Smooth Transitions
+      transition: all 0.25s ease-in-out;
+
+      // Hover State
+      &:hover {
+        border-color: #2ecc71; // Matches the green 🌿 theme
+        background-color: #f9fbf9;
+      }
+
+      // Focus/Active State
+      &:focus {
+        outline: none;
+        border-color: #2ecc71;
+        box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+      }
+
+      // Styling options dropdown menu items
+      option {
+        font-weight: normal;
+        padding: 0.5rem;
+        color: #2c3e50;
+        background-color: #ffffff;
+
+        &:disabled {
+          color: #95a5a6;
+        }
+      }
+    }
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  /* --- Brand & Description Styling --- */
+  .brand-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .brand-logo {
+    font-size: 2.5rem;
+    background: #f0fdf4;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #dcfce7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.05);
+  }
+
+  .brand-text {
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 0.925rem;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  /* --- Statistics Badge Styling --- */
+  .meta-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    cursor: help;
+
+    &:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+  }
+
+  .stat-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* --- Clean Separation Line --- */
+  .header-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, #e2e8f0 0%, rgba(226, 232, 240, 0) 100%);
+    margin-bottom: 32px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .app-header {
+      padding: 16px;
+    }
+
+    .header-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .meta-section {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+}
+.tree-controls {
+  direction: rtl;
+}
+.action-button {
+  background: #487f5b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 20px;
+  cursor: pointer;
+  .btn-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  &.primary-btn {
+    background: #1e293b;
+    color: #ffffff;
+
+    &:hover {
+      background: #0f172a;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+  }
+}
+.person-card {
+  width: 120px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+// .has-children {
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     display: block;
+//     width: 1px;
+//     height: 10px;
+//     bottom: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background: #334155;
+//   }
+// }
+
+:host ::ng-deep {
+  .p-organizationchart-connector-left,
+  .p-organizationchart-connector-top,
+  .p-organizationchart-connectors :nth-child(1 of .p-organizationchart-connector-right) {
+    border-color: #dadee3 !important;
+  }
+}
+.person-card:hover {
+  // transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background: #f9fafb;
+}
+
+.avatar {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.name {
+  font-weight: 600;
+  color: #334155;
+}
+
+/* --- 2. Fix the Broken Lines --- */
+/* Instead of breaking table spacing, add margin around your node content to space them out */
+:host ::ng-deep .p-organizationchart-node {
+  padding: 0 !important;
+  border: none;
+}
+
+:host ::ng-deep .p-organizationchart-connector-down {
+  height: 5px;
+}
+
+/* Update connector colors & width safely using PrimeNG variables */
+:host ::ng-deep .p-organizationchart {
+  --p-organizationchart-connector-color: #dadee3;
+}
+
+/* Fallback line-width overrides for older PrimeNG versions */
+:host ::ng-deep .p-organizationchart-line-down,
+:host ::ng-deep .p-organizationchart-line-left,
+:host ::ng-deep .p-organizationchart-line-right,
+:host ::ng-deep .p-organizationchart-line-top {
+  border-color: #334155 !important;
+  border-width: 3px !important;
+}
+
+/* --- 3. Render Arrows Reliably --- */
+/* Target the bottom vertical connector safely */
+:host ::ng-deep .p-organizationchart-line-down {
+  position: relative;
+  overflow: visible !important; /* Ensure the pseudo-element isn't clipped */
+}
+
+:host ::ng-deep .p-organizationchart-line-down::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%); /* Centers the arrow perfectly horizontally */
+
+  /* Creates a clean CSS triangle */
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid #334155;
+
+  z-index: 10;
+}
+
+:host ::ng-deep {
+  // .p-overlay-mask {
+  //   background-color: rgba(0, 0, 0, 0.5);
+  // }
+  // .p-dialog {
+  //   background-color: #fff;
+  //   border-radius: 7px;
+  //   padding: 1rem;
+  // }
+
+  .child-form {
+    padding-top: 0.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .full-width {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .full-width:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 15%);
+    outline: none;
+  }
+
+  .error-text {
+    color: #ef4444;
+    font-size: 12px;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-cancel {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  .btn-cancel:hover {
+    background: #e5e7eb;
+  }
+
+  .btn-save {
+    background: #2563eb;
+    color: white;
+  }
+
+  .btn-save:hover:not(:disabled) {
+    background: #1d4ed8;
+  }
+
+  .btn-save:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+  }
+}
+
+.person-card {
+  position: relative;
+  padding: 10px;
+}
+
+.add-new-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  // border: 1px solid #dadee3;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

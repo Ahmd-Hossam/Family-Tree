@@ -1,0 +1,77 @@
+.wrapper {
+  /* Dropdown Container Custom Select Wrapper */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  select {
+    // Appearance Reset
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: 2rem;
+    // Layout & Alignment
+    display: inline-block;
+    width: 100%;
+    max-width: 500px;
+    min-width: 180px;
+    padding: 0.8rem 2.5rem 0.8rem 1rem; // Extra right padding for custom arrow
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.5;
+
+    // Custom Arrow Icon using SVG Data-URI
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 0.8rem center; // Positions arrow correctly for RTL layout
+    background-size: 1rem;
+    background-color: #ffffff;
+
+    // Borders & Radii
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+
+    // Smooth Transitions
+    transition: all 0.25s ease-in-out;
+    z-index: 99999;
+    position: relative;
+    text-align: right;
+    // Hover State
+    &:hover {
+      border-color: #2ecc71; // Matches the green 🌿 theme
+      background-color: #f9fbf9;
+    }
+
+    // Focus/Active State
+    &:focus {
+      outline: none;
+      border-color: #2ecc71;
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+    }
+
+    // Styling options dropdown menu items
+    option {
+      font-weight: normal;
+      padding: 1rem !important;
+      color: #2c3e50;
+      background-color: #ffffff;
+      cursor: pointer;
+      &:disabled {
+        color: #95a5a6;
+      }
+    }
+    color: #2c3e50; // Default active color
+
+    // Style when the placeholder is actively selected
+    &.placeholder-selected {
+      color: #94a3b8; // Light slate gray placeholder color
+    }
+
+    @media (max-width: 767px) {
+      max-width: 300px;
+    }
+  }
+}

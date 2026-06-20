@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <select
+    [(ngModel)]="currentTreeId"
+    (change)="onSelectChange($event)"
+    [class.placeholder-selected]="currentTreeId === null"
+  >
+    <option [ngValue]="null" disabled hidden>اختر العائلة</option>
+    <option value="abu-ismail">عائلة أبو إسماعيل</option>
+    <option value="abu-ibido">عائلة عبيدو</option>
+    <option value="khalil">عائلة خليل</option>
+  </select>
+</div>

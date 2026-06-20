@@ -1,0 +1,186 @@
+<div class="family">
+  <div class="family" dir="rtl">
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand-section">
+          <span class="brand-logo">🌿</span>
+
+          <div class="brand-text">
+            <h1>{{ treeTitle }}</h1>
+            <p class="subtitle">
+              اكتشف وسجّل واحفظ روابط عائلتك وأصولك العائلية.
+              <a class="backToPrev" routerLink="/family-wrapper"> العوده الي السابق</a>
+            </p>
+          </div>
+        </div>
+
+        <select [(ngModel)]="currentTreeId" (change)="onSelectChange($event)">
+          <option value="abu-ismail">عائلة أبو إسماعيل</option>
+          <option value="abu-ibido">عائلة عبيدو</option>
+          <option value="khalil">عائلة خليل</option>
+        </select>
+
+        <div class="meta-section">
+          @if (!data || data.length === 0) {
+            <div class="empty-tree">
+              <button type="button" class="action-button" (click)="openRootDialog()">
+                <span>➕</span> اضافه الاصل
+              </button>
+            </div>
+          }
+          @if (data && data.length > 0) {
+            <div class="header-actions">
+              <button
+                type="button"
+                class="action-button primary-btn"
+                (click)="expandAll(data)"
+                pTooltip="اظهار جميع الأجيال"
+                tooltipPosition="bottom"
+              >
+                <span class="btn-icon">📂</span>
+                اظهار الكل
+              </button>
+
+              <button
+                type="button"
+                class="action-button secondary-btn"
+                (click)="collapseAll(data)"
+                pTooltip="اخفاء جميع الأجيال وصولاً إلى الأجداد"
+                tooltipPosition="bottom"
+              >
+                <span class="btn-icon">📁</span>
+                اخفاء الكل
+              </button>
+            </div>
+          }
+
+          <div
+            class="stat-badge"
+            [pTooltip]="'إجمالي عدد أفراد العائلة في الشجرة'"
+            tooltipPosition="bottom"
+          >
+            <span class="stat-icon">👥</span>
+
+            <div class="stat-details">
+              <span class="stat-value">{{ totalMembersCount }}</span>
+              <span class="stat-label">أفراد</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    @if (data && data.length > 0) {
+      <div
+        class="chart-container"
+        (mousedown)="startDrag($event)"
+        (mousemove)="onDrag($event)"
+        (mouseup)="stopDrag()"
+        (mouseleave)="stopDrag()"
+      >
+        <p-organizationChart [value]="data">
+          <ng-template let-node pTemplate="person">
+            <div
+              class="person-card"
+              [class.has-children]="node.children?.length"
+              (click)="toggleNode(node)"
+            >
+              <div class="avatar">
+                {{ node.data?.gender === 'Female' ? '👩' : '👨🏼' }}
+              </div>
+
+              <div class="name">
+                {{ node.label }}
+              </div>
+
+              <button type="button" class="add-new-btn" (click)="openAddChildDialog(node, $event)">
+                <h2 style="font-size: 1.5rem"><span>+</span></h2>
+              </button>
+
+              @if (node.children?.length) {
+                <small>
+                  {{ node.expanded ? '▼' : '▶' }}
+                </small>
+              }
+            </div>
+          </ng-template>
+        </p-organizationChart>
+      </div>
+    }
+
+    <p-dialog
+      header="إضافة فرد جديد"
+      [(visible)]="showDialog"
+      [modal]="true"
+      [style]="{ width: '400px' }"
+    >
+      <form [formGroup]="childForm" class="child-form">
+        <div class="form-group">
+          <label for="childName">الاسم *</label>
+          <input
+            id="childName"
+            type="text"
+            pInputText
+            formControlName="name"
+            placeholder="أدخل الاسم"
+            class="full-width"
+          />
+          @if (childForm.get('name')?.invalid && childForm.get('name')?.touched) {
+            <small class="error-text">الاسم مطلوب</small>
+          }
+        </div>
+
+        <div class="form-group mt-4">
+          <label for="gender">الجنس</label>
+          <select id="gender" class="full-width" formControlName="gender">
+            <option [ngValue]="null" disabled>اختر الجنس</option>
+            <option value="Male">ذكر</option>
+            <option value="Female">أنثى</option>
+          </select>
+          @if (childForm.get('gender')?.invalid && childForm.get('gender')?.touched) {
+            <small class="error-text">الجنس مطلوب</small>
+          }
+        </div>
+
+        <div class="form-group mt-4">
+          <label for="phoneNumber">رقم الهاتف</label>
+          <input
+            id="phoneNumber"
+            type="tel"
+            pInputText
+            formControlName="phoneNumber"
+            placeholder="أدخل رقم الهاتف"
+            class="full-width"
+          />
+          @if (childForm.get('phoneNumber')?.invalid && childForm.get('phoneNumber')?.touched) {
+            <small class="error-text">رقم غير صحيح</small>
+          }
+        </div>
+
+        <div class="form-group mt-4">
+          <label for="address">العنوان</label>
+          <textarea
+            id="address"
+            pInputTextarea
+            formControlName="address"
+            rows="3"
+            placeholder="أدخل العنوان"
+            class="full-width"
+          ></textarea>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-cancel" (click)="showDialog = false">إلغاء</button>
+          <button
+            type="button"
+            class="btn btn-save"
+            (click)="saveChild()"
+            [disabled]="childForm.invalid"
+          >
+            حفظ
+          </button>
+        </div>
+      </form>
+    </p-dialog>
+  </div>
+</div>

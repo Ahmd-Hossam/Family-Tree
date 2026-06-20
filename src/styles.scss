@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+
+:host ::ng-deep {
+  .p-organizationchart-line-down,
+  .p-organizationchart-line-left,
+  .p-organizationchart-line-right {
+    border-color: #3b82f6;
+    border-width: 2px;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+
+  background-image: url('./assets/imgs/al7ag.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body::after {
+  content: '';
+  position: fixed; // covers entire screen
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  z-index: 0;
+}
